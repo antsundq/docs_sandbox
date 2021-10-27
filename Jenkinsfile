@@ -7,12 +7,15 @@ pipeline {
 			}
 		}
 		
-		stage('Fetch') {
+		stage('Fetch Build System') {
 			steps {
 				dir ('buildsystem'){
 					git branch: 'main',
 						credentialsId: 'Jenkins-Asteme',
 						url: 'https://github.com/Asteme/Asteme-Buildsystem.git'
+					sh 'python -m venv .venv'
+					sh '.venv\scripts\activate'
+					sh 'pip install -r requirements.txt'
 				}
 			}
 		}
@@ -28,7 +31,6 @@ pipeline {
 		}
 		stage('Generate Docs'){
 			steps{
-				echo 'Docs not configured..'
 				dir('buildsystem/mkdocs builder'){
 					sh 'python mkdocs_builder.py'
 				}
