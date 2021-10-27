@@ -1,14 +1,9 @@
-def gitTag = null
 pipeline {
 	agent any
 	stages {
 		stage('Checkout'){
 			steps{
-				script {
-					gitTag=bat(returnStdout: true, script: "@git tag --contains").trim()
-					echo 'GIT TAG SET TO'
-					echo gitTag
-				}
+				echo "Checkout"
 			}
 		}
 		stage('Initialize Build System') {
@@ -27,13 +22,11 @@ pipeline {
 				echo 'Python environment initialized'
 			}
 		}
+		/*
 		stage('Test') {
 			steps {
-				echo 'GIT TAG CONTAINS'
-				bat 'git tag --contains'
 			}
 		}
-		/*
 		stage('Build') {
 			steps {
 				echo 'Building not configured..'
@@ -51,10 +44,8 @@ pipeline {
 		stage('Deploy') {
 			when{
 				expression{
-					return gitTag
+					return script {bat(returnStdout: true, script: "@git tag --contains").trim()}
 				}
-				//tag "release*"
-				//bat(returnStdout: true, script: "git tag --contains").trim()
 			}
 			steps {
 				bat 'mkdocs gh-deploy'
