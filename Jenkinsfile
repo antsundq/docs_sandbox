@@ -1,44 +1,64 @@
+def gitTag = null
 pipeline {
 	agent any
 	stages {
-		stage('Clean') {
-			steps {
-				echo 'Cleaning not configured..'
-			}
-		}
-		
-		stage('Fetch Build System') {
-			steps {
-				dir ('buildsystem'){
-					git branch: 'main',
-						credentialsId: 'Jenkins-Asteme',
-						url: 'https://github.com/Asteme/Asteme-Buildsystem.git'
-					sh 'python -m venv .venv'
-					sh '.venv\scripts\activate'
-					sh 'pip install -r requirements.txt'
+		stage('Checkout'){
+			steps{
+				script {
+					gitTag=bat(returnStdout: true, script: "@git tag --contains").trim()
+					echo 'GIT TAG SET TO'
+					echo gitTag
 				}
 			}
 		}
+		stage('Initialize Build System') {
+			steps {
+				dir ('buildsystem'){
+					git url: 'https://github.com/Asteme/Asteme-Buildsystem.git',
+						branch: 'main',
+						credentialsId: 'Jenkins-Asteme'
+				}
+				echo 'Build system pulled' 
+				dir ('buildsystem'){
+					bat 'python -m venv .venv'
+					bat '.venv\\scripts\\activate'
+					bat 'pip install -r requirements.txt'
+				}
+				echo 'Python environment initialized'
+			}
+		}
+		stage('Test') {
+			steps {
+				echo 'GIT TAG CONTAINS'
+				bat 'git tag --contains'
+			}
+		}
+		/*
 		stage('Build') {
 			steps {
 				echo 'Building not configured..'
 			}
 		}
-		stage('Test') {
-			steps {
-				echo 'Testing not configured..'
-			}
-		}
+		*/
 		stage('Generate Docs'){
 			steps{
 				dir('buildsystem/mkdocs builder'){
-					sh 'python mkdocs_builder.py'
+					bat 'python mkdocs_builder.py '+env.WORKSPACE +'\\docs'
 				}
+				bat 'mkdocs build'
 			}
 		}
 		stage('Deploy') {
+			when{
+				expression{
+					return gitTag
+				}
+				//tag "release*"
+				//bat(returnStdout: true, script: "git tag --contains").trim()
+			}
 			steps {
-				echo 'Deploying not configured..'
+				bat 'mkdocs gh-deploy'
+				echo 'Project deployed'
 			}
 		}
 	}
