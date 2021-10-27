@@ -28,7 +28,7 @@ pipeline {
 		}
 		stage('Generate Docs'){
 			steps{
-				
+				echo 'Docs not configured..'
 			}
 		}
 		stage('Deploy') {
