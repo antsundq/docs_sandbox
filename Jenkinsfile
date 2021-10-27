@@ -1,11 +1,11 @@
 pipeline {
 	agent any
+	environment{
+		AUTHOR = "Anton Sundqvist"
+		INITIAL_RELEASE = 2021
+		
+	}
 	stages {
-		stage('Checkout'){
-			steps{
-				echo "Checkout"
-			}
-		}
 		stage('Initialize Build System') {
 			steps {
 				dir ('buildsystem'){
@@ -36,7 +36,7 @@ pipeline {
 		stage('Generate Docs'){
 			steps{
 				dir('buildsystem/mkdocs builder'){
-					bat 'python mkdocs_builder.py '+env.WORKSPACE +'\\docs'
+					bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +'\\docs --author '+${AUTHOR}+' --initial_release '+${INITIAL_RELEASE}
 				}
 				bat 'mkdocs build'
 			}
