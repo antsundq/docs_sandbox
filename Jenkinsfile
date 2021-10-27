@@ -29,6 +29,9 @@ pipeline {
 		stage('Generate Docs'){
 			steps{
 				echo 'Docs not configured..'
+				dir('buildsystem/mkdocs builder'){
+					sh 'python mkdocs_builder.py'
+				}
 			}
 		}
 		stage('Deploy') {
