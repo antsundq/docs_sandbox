@@ -11,7 +11,7 @@ pipeline {
 			steps {
 				dir ('buildsystem'){
 					git branch: 'main',
-						credentialsId: 'a3b9a927-12e4-4063-a568-c49d0213d2f3',
+						credentialsId: 'Jenkins-Asteme',
 						url: 'https://github.com/Asteme/Asteme-Buildsystem.git'
 				}
 			}
@@ -24,6 +24,11 @@ pipeline {
 		stage('Test') {
 			steps {
 				echo 'Testing not configured..'
+			}
+		}
+		stage('Generate Docs'){
+			steps{
+				
 			}
 		}
 		stage('Deploy') {
