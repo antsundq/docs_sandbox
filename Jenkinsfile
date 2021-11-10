@@ -47,7 +47,7 @@ pipeline {
 				}
 			}
 			steps {
-				bat 'mkdocs gh-deploy'
+				bat 'mkdocs gh-deploy --force'
 				echo 'Project deployed'
 			}
 		}
