@@ -13,14 +13,13 @@ pipeline {
 					git url: 'https://github.com/astemes/astemes-buildsystem.git',
 						branch: 'main',
 						credentialsId: 'Jenkins-Asteme'
-				}
-				echo 'Build system pulled' 
-				dir ('buildsystem'){
+					echo 'Build system pulled' 
 					bat 'python -m venv .venv'
 					bat '.venv\\scripts\\activate'
 					bat 'pip install -r requirements.txt'
 				}
 				echo 'Python environment initialized'
+				bat 'git fetch'
 			}
 		}
 		/*
@@ -43,7 +42,6 @@ pipeline {
 			}
 		}
 		stage('Deploy') {
-			bat 'git fetch'
 			when{
 				expression{
 					return script {bat(returnStdout: true, script: "@git tag --contains").trim()}
