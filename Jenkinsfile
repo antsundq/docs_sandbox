@@ -43,7 +43,7 @@ pipeline {
 			}
 		}
 		stage('Deploy') {
-			bat(script: "git fetch")
+			bat 'git fetch'
 			when{
 				expression{
 					return script {bat(returnStdout: true, script: "@git tag --contains").trim()}
