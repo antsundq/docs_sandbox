@@ -18,11 +18,11 @@ pipeline {
 				sh 'git fetch'
 			}
 		}		
+		/*
 		stage('Release') {
 			tag=$(git describe --tags)
 			echo tag
 		}
-		/*
 		stage('Initialize Python venv') {
 			steps {
 				dir ('buildsystem'){
