@@ -68,6 +68,11 @@ pipeline {
 			}
 		}
 		*/
+		stage('Release') {
+			tag=$(git describe --tags)
+			echo tag
+		}
+		
 	}
 	options {
 		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
