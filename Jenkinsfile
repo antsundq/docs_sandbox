@@ -17,6 +17,10 @@ pipeline {
 				}
 				sh 'git fetch'
 			}
+		}		
+		stage('Release') {
+			tag=$(git describe --tags)
+			echo tag
 		}
 		/*
 		stage('Initialize Python venv') {
@@ -67,12 +71,7 @@ pipeline {
 				echo 'Project deployed'
 			}
 		}
-		*/
-		stage('Release') {
-			tag=$(git describe --tags)
-			echo tag
-		}
-		
+		*/		
 	}
 	options {
 		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
