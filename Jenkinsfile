@@ -15,15 +15,15 @@ pipeline {
 						credentialsId: 'Jenkins-Astemes'
 					echo 'Build system pulled'
 				}
-				bat 'git fetch'
+				sh 'git fetch'
 			}
 		}
 		stage('Initialize Python venv') {
 			steps {
 				dir ('buildsystem'){
-					bat 'python -m venv .venv'
-					bat '.venv\\scripts\\activate'
-					bat 'pip install -r requirements.txt'
+					sh 'python -m venv .venv'
+					sh '.venv\\scripts\\activate'
+					sh 'pip install -r requirements.txt'
 				}
 				echo 'Python environment initialized'
 			}
@@ -52,9 +52,9 @@ pipeline {
 		stage('Generate Docs'){
 			steps{
 				dir('buildsystem/mkdocs_builder'){
-					bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
+					sh 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
 				}
-				bat 'mkdocs build'
+				sh 'mkdocs build'
 			}
 		}
 		stage('Deploy') {
@@ -64,7 +64,7 @@ pipeline {
 				}
 			}
 			steps {
-				bat 'mkdocs gh-deploy --force'
+				sh 'mkdocs gh-deploy --force'
 				echo 'Project deployed'
 			}
 		}
