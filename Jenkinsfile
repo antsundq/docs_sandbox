@@ -18,6 +18,7 @@ pipeline {
 				sh 'git fetch'
 			}
 		}
+		/*
 		stage('Initialize Python venv') {
 			steps {
 				dir ('buildsystem'){
@@ -28,7 +29,6 @@ pipeline {
 				echo 'Python environment initialized'
 			}
 		}
-		/*
 		stage('Test') {
 			steps {
 			}
@@ -48,7 +48,6 @@ pipeline {
 				echo 'Building not configured..'
 			}
 		}
-		*/
 		stage('Generate Docs'){
 			steps{
 				dir('buildsystem/mkdocs_builder'){
@@ -68,6 +67,7 @@ pipeline {
 				echo 'Project deployed'
 			}
 		}
+		*/
 	}
 	options {
 		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
