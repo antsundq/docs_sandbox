@@ -21,8 +21,8 @@ pipeline {
 		stage('Release') {
 			steps{
 				script{
-					library 'Test_build_support'
-                    docsTest.info 'Starting'
+					library 'astemes-build-support'
+                    helloWorld 'Anton'
 				}
 			}
 		}
