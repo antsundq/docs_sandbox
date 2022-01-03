@@ -21,7 +21,7 @@ pipeline {
 		stage('Release') {
 			steps{
 				script{
-					test_lib.info 'Hello World from my lib'
+					docs_test.info 'Hello World from my lib'
 				}
 			}
 		}
