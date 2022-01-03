@@ -21,7 +21,7 @@ pipeline {
 		stage('Release') {
 			steps{
 				script{
-					docsTest
+                    log.info 'Starting'
 				}
 			}
 		}
