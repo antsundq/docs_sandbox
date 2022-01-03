@@ -72,8 +72,9 @@ pipeline {
 			steps{
 				script{
 					def tag = sh(returnStdout: true, script: "git tag --contains").trim()
+					def message = sh(returnStdout: true, script: "git tag -n99")
 					library 'astemes-build-support'
-                    helloWorld tag
+                    helloWorld message
 				}
 			}
 		}	
