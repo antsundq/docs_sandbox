@@ -71,8 +71,8 @@ pipeline {
 		stage('Release') {
 			steps{
 				script{
-					String tag = sh(returnStdout: true, script: "git tag --contains").trim()
-					echo "git tag -n99 -l "+tag
+					def tag = sh(returnStdout: true, script: "git tag --contains").trim()
+					echo tag
 					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
 					echo message
 				}
