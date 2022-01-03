@@ -21,7 +21,7 @@ pipeline {
 		stage('Release') {
 			steps{
 				script{
-					library 'docsTest'
+					library 'Test_build_support'
                     docsTest.info 'Starting'
 				}
 			}
