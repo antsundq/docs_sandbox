@@ -1,6 +1,3 @@
-library{
-	lib('Test_build_support')
-}
 pipeline {
 	agent any
 	environment{
@@ -24,6 +21,7 @@ pipeline {
 		stage('Release') {
 			steps{
 				script{
+					library 'docsTest'
                     docsTest.info 'Starting'
 				}
 			}
