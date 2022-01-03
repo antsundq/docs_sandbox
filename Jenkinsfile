@@ -79,9 +79,9 @@ pipeline {
 				script{
 					def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
-					def releaseName = "${RELEASE_TITLE} ${tag}"					
+					def releaseName = "${RELEASE_TITLE} ${tag}"			
+					echo "Path: ${env.VIP_FILE_PATH}"		
 				}
-				echo "Path: ${VIP_FILE_PATH}"
 			}
 		}	
 	}
