@@ -72,9 +72,9 @@ pipeline {
 			steps{
 				script{
 					def tag = sh(returnStdout: true, script: "git tag --contains").trim()
-					echo tag
 					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
-					echo message
+					der releaseName = "${PROJECT_TITLE} ${tag}"
+					echo releaseName
 				}
 			}
 		}	
