@@ -19,7 +19,9 @@ pipeline {
 			}
 		}		
 		stage('Release') {
-			test_lib.info 'Hello World from my lib'
+			script{
+				test_lib.info 'Hello World from my lib'
+			}
 		}
 		/*
 		stage('Initialize Python venv') {
