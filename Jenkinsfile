@@ -45,6 +45,7 @@ pipeline {
 				echo 'Building not configured..'
 				script{
 					env.VIP_FILE_PATH = "path/to/file"
+					echo env.VIP_FILE_PATH
 				}
 			}
 		}
