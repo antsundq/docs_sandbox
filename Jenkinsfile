@@ -5,6 +5,10 @@ pipeline {
 		REPO_URL = "https://github.com/sunqn/docs_sandbox"
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
+		RELEASE_TITLE = "Release"
+	}
+	parameters{
+		string(name: 'vip_file_path', defaultValue='')
 	}
 	stages {
 		stage('Initialize Build System') {
@@ -37,12 +41,14 @@ pipeline {
 			steps {
 				echo 'Building not configured..'
 			}
-		}
+		}*/
 		stage('Build VIP') {
 			steps {
 				echo 'Building not configured..'
+				env.vip_file_path = "/path/to/file"
 			}
 		}
+		/*
 		stage('Publish Release') {
 			steps {
 				echo 'Building not configured..'
@@ -73,8 +79,8 @@ pipeline {
 				script{
 					def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
-					def releaseName = "${PROJECT_TITLE} ${tag}"
-					echo releaseName
+					def releaseName = "${RELEASE_TITLE} ${tag}"					
+					echo "${env.vip_file_path}"
 				}
 			}
 		}	
