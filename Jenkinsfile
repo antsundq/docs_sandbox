@@ -19,8 +19,10 @@ pipeline {
 			}
 		}		
 		stage('Release') {
-			script{
-				test_lib.info 'Hello World from my lib'
+			steps{
+				script{
+					test_lib.info 'Hello World from my lib'
+				}
 			}
 		}
 		/*
