@@ -18,6 +18,7 @@ pipeline {
 				sh 'git fetch'
 			}
 		}
+		/*
 		stage('Initialize Python venv') {
 			steps {
 				dir ('buildsystem'){
@@ -28,7 +29,6 @@ pipeline {
 				echo 'Python environment initialized'
 			}
 		}		
-		/*
 		stage('Test') {
 			steps {
 			}
@@ -67,6 +67,7 @@ pipeline {
 				echo 'Project deployed'
 			}
 		}
+		*/	
 		stage('Release') {
 			steps{
 				script{
@@ -74,8 +75,7 @@ pipeline {
                     helloWorld 'Anton'
 				}
 			}
-		}
-		*/		
+		}	
 	}
 	options {
 		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
