@@ -45,7 +45,9 @@ pipeline {
 		stage('Build VIP') {
 			steps {
 				echo 'Building not configured..'
-				params.vip_file_path = "/path/to/file"
+				script{
+					env.vip_file_path = "path/to/file"
+				}
 			}
 		}
 		/*
