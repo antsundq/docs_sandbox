@@ -8,7 +8,7 @@ pipeline {
 		RELEASE_TITLE = "Release"
 	}
 	parameters{
-		string(name: 'vip_file_path', defaultValue='')
+		string(name: 'vip_file_path', defaultValue: '')
 	}
 	stages {
 		stage('Initialize Build System') {
