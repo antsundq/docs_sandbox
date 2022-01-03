@@ -6,7 +6,6 @@ pipeline {
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
 		RELEASE_TITLE = "Release"
-		VIP_FILE_PATH = "none"
 	}
 	stages {
 		stage('Initialize Build System') {
@@ -44,7 +43,7 @@ pipeline {
 			steps {
 				echo 'Building not configured..'
 				script{
-					env.VIP_FILE_PATH = "path/vip"
+					VIP_FILE_PATH = "path/vip"
 				}
 			}
 		}
@@ -80,7 +79,7 @@ pipeline {
 					def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
 					def releaseName = "${RELEASE_TITLE} ${tag}"			
-					echo "Path: ${env.VIP_FILE_PATH}"		
+					echo "Path: ${VIP_FILE_PATH}"		
 				}
 			}
 		}	
