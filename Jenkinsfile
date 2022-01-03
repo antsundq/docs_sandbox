@@ -71,8 +71,7 @@ pipeline {
 		stage('Release') {
 			steps{
 				script{
-					def tag = sh @git tag --contains
-					tag=tag.trim()
+					def tag = return script {bat(returnStdout: true, script: "@git tag --contains").trim()}
 					library 'astemes-build-support'
                     helloWorld tag
 				}
