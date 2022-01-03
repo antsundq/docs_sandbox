@@ -19,8 +19,7 @@ pipeline {
 			}
 		}		
 		stage('Release') {
-			tag=$(git describe --tags)
-			echo tag
+			test_lib.info 'Hello World from my lib'
 		}
 		/*
 		stage('Initialize Python venv') {
