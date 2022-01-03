@@ -6,7 +6,7 @@ pipeline {
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
 		RELEASE_TITLE = "Release"
-		VIP_FILE_PATH = ""
+		VIP_FILE_PATH = "none"
 	}
 	stages {
 		stage('Initialize Build System') {
