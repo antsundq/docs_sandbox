@@ -45,7 +45,7 @@ pipeline {
 		stage('Build VIP') {
 			steps {
 				echo 'Building not configured..'
-				env.vip_file_path = "/path/to/file"
+				params.vip_file_path = "/path/to/file"
 			}
 		}
 		/*
@@ -80,7 +80,7 @@ pipeline {
 					def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
 					def releaseName = "${RELEASE_TITLE} ${tag}"					
-					echo "${env.vip_file_path}"
+					echo "${params.vip_file_path}"
 				}
 			}
 		}	
