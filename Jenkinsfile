@@ -21,7 +21,7 @@ pipeline {
 		stage('Initialize Python venv') {
 			steps {
 				dir ('buildsystem'){
-					sh 'python -m venv .venv'
+					sh 'python3 -m venv .venv'
 					sh '.venv\\scripts\\activate'
 					sh 'pip install -r requirements.txt'
 				}
