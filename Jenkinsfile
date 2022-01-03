@@ -17,16 +17,7 @@ pipeline {
 				}
 				sh 'git fetch'
 			}
-		}		
-		stage('Release') {
-			steps{
-				script{
-					library 'astemes-build-support'
-                    helloWorld 'Anton'
-				}
-			}
 		}
-		/*
 		stage('Initialize Python venv') {
 			steps {
 				dir ('buildsystem'){
@@ -36,7 +27,8 @@ pipeline {
 				}
 				echo 'Python environment initialized'
 			}
-		}
+		}		
+		/*
 		stage('Test') {
 			steps {
 			}
@@ -73,6 +65,14 @@ pipeline {
 			steps {
 				sh 'mkdocs gh-deploy --force'
 				echo 'Project deployed'
+			}
+		}
+		stage('Release') {
+			steps{
+				script{
+					library 'astemes-build-support'
+                    helloWorld 'Anton'
+				}
 			}
 		}
 		*/		
