@@ -10,7 +10,7 @@ pipeline {
 		stage('Initialize Build System') {
 			steps {
 				dir ('buildsystem'){
-					git url: 'https://github.com/astemes/astemes-buildsystem.git',
+					git url: 'https://github.com/antsundq/build-system-sandbox.git',
 						branch: 'main',
 						credentialsId: 'Jenkins-Astemes'
 					echo 'Build system pulled'
