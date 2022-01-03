@@ -1,4 +1,4 @@
-libraries{
+library{
 	lib('Test_build_support')
 }
 pipeline {
