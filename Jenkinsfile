@@ -72,6 +72,7 @@ pipeline {
 			steps{
 				script{
 					def tag = sh(returnStdout: true, script: "git tag --contains").trim()
+					echo "git tag -n99 -l ${tag}"
 					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
 					def message2 = sh(returnStdout: true, script: "git tag -n99 -l test2")
 					library 'astemes-build-support'
