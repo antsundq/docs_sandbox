@@ -78,7 +78,7 @@ pipeline {
 		stage('Release') {
 			steps{
 				script{
-					def tag = "test6"
+					def tag = "test5"
 					//def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 					def user = "sunqn"
 					def repo = "docs_sandbox"
