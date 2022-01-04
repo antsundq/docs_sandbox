@@ -75,13 +75,15 @@ pipeline {
 		*/	
 		stage('Release') {
 			steps{
-				script{
-					def tag = sh(returnStdout: true, script: "git tag --contains").trim()
-					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
-					def releaseName = "${RELEASE_TITLE} ${tag}"			
-					def vipPath = VIP_FILE_PATH
-					def releaseInfo = sh(returnStdout: true, script: "./linux-amd64-github-release -h")
-					echo releaseInfo
+				dir ('buildsystem'){
+					script{
+						def tag = sh(returnStdout: true, script: "git tag --contains").trim()
+						def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
+						def releaseName = "${RELEASE_TITLE} ${tag}"			
+						def vipPath = VIP_FILE_PATH
+						def releaseInfo = sh(returnStdout: true, script: "./linux-amd64-github-release -h")
+						echo releaseInfo
+					}
 				}
 			}
 		}	
