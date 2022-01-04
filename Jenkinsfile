@@ -85,7 +85,7 @@ pipeline {
 					sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					def releaseInfo = sh(returnStdout: true, script: "./buildsystem/github_release/linux-amd64-github-release -h")
 					def vipPath = VIP_FILE_PATH
-					def fileName = "VIPM Package"
+					def fileName = "VIPM Package.txt"
 					//sh "./buildsystem/github_release/linux-amd64-github-release release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --pre-release"
 					sh "./buildsystem/github_release/linux-amd64-github-release upload --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${fileName}\" --file \"${vipPath}\""
 				}
