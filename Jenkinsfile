@@ -6,8 +6,8 @@ pipeline {
 		PROJECT_TITLE = "Docs Sandbox"
 		REPORT_PATH = "reports"
 		REPO_URL = "https://github.com/sunqn/docs_sandbox"
-		GITHUB_USER = suqn
-		GITHUB_REPO = docs_sandbox
+		GITHUB_USER = "sunqn"
+		GITHUB_REPO = "docs_sandbox"
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
 		RELEASE_TITLE = "Release"
