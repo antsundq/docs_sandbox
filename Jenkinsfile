@@ -7,7 +7,7 @@ pipeline {
 		INITIAL_RELEASE = 2021
 		RELEASE_TITLE = "Release"
 		GITHUB_CREDENTIALS = credentials('Jenkins-Astemes')
-		GITHUB_TOKEN = '$GITHUB_CREDENTIALS_PWD'
+		//GITHUB_TOKEN = '$GITHUB_CREDENTIALS_PWD'
 	}
 	stages {
 		stage('Initialize Build System') {
@@ -82,14 +82,12 @@ pipeline {
 					//def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 					def user = "sunqn"
 					def repo = "docs_sandbox"
-					//def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
-					def message = "Message"
+					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
 					def releaseName = "${RELEASE_TITLE} ${tag}"			
 					sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
-					//def releaseInfo = sh(returnStdout: true, script: "./buildsystem/github_release/linux-amd64-github-release -h")
 					def vipPath = VIP_FILE_PATH
 					def fileName = "VIPM_Package.txt"
-					sh "./buildsystem/github_release/linux-amd64-github-release release --user ${user} --repo ${repo} --tag '${tag}' --name '${releaseName}' --description '${message}' --pre-release"
+					sh "./buildsystem/github_release/linux-amd64-github-release release --user ${user} --repo ${repo} --tag '${tag}' --name '${releaseName}' --description '${message}' --draft"
 					sh "./buildsystem/github_release/linux-amd64-github-release upload --user ${user} --repo ${repo} --tag '${tag}' --name '${fileName}' --file¨'${vipPath}'"
 				}
 			}
