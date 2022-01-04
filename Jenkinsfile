@@ -6,8 +6,7 @@ pipeline {
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
 		RELEASE_TITLE = "Release"
-		GITHUB_CREDENTIALS = credentials('github-deploy')
-		GITHUB_TOKEN = '$GITHUB_CREDENTIALS_PWD'
+		GITHUB_TOKEN = credentials('github-token')
 	}
 	stages {
 		stage('Initialize Build System') {
