@@ -80,7 +80,8 @@ pipeline {
 					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
 					def releaseName = "${RELEASE_TITLE} ${tag}"			
 					def vipPath = VIP_FILE_PATH
-					echo vipPath
+					def releaseInfo = sh(returnStdout: true, script: "./linux-amd64-github-release -h")
+					echo releaseInfo
 				}
 			}
 		}	
