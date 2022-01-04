@@ -77,7 +77,8 @@ pipeline {
 			steps{
 				dir ('buildsystem/github_release'){
 					script{
-						def tag = sh(returnStdout: true, script: "git tag --contains").trim()
+						def tag = test5
+						#def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 						def user = "sunqn"
 						def repo = "docs_sandbox"
 						def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
