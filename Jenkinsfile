@@ -43,7 +43,7 @@ pipeline {
 			steps {
 				echo 'Building not configured..'
 				script{
-					VIP_FILE_PATH = "path/vip"
+					VIP_FILE_PATH = "buildsystem/github_release/repository.txt"
 				}
 			}
 		}
@@ -75,19 +75,19 @@ pipeline {
 		*/	
 		stage('Release') {
 			steps{
-				dir ('buildsystem/github_release'){
-					script{
-						def tag = "test4"
-						//def tag = sh(returnStdout: true, script: "git tag --contains").trim()
-						def user = "sunqn"
-						def repo = "docs_sandbox"
-						def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
-						def releaseName = "${RELEASE_TITLE} ${tag}"			
-						sh "chmod 777 ./linux-amd64-github-release"
-						def releaseInfo = sh(returnStdout: true, script: "./linux-amd64-github-release -h")
-						def vipPath = VIP_FILE_PATH
-						sh "./linux-amd64-github-release release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --pre-release"
-					}
+				script{
+					def tag = "test4"
+					//def tag = sh(returnStdout: true, script: "git tag --contains").trim()
+					def user = "sunqn"
+					def repo = "docs_sandbox"
+					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
+					def releaseName = "${RELEASE_TITLE} ${tag}"			
+					sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
+					def releaseInfo = sh(returnStdout: true, script: "./buildsystem/github_release/linux-amd64-github-release -h")
+					def vipPath = VIP_FILE_PATH
+					def fileName = "VIPM Package"
+					//sh "./buildsystem/github_release/linux-amd64-github-release release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --pre-release"
+					sh "./buildsystem/github_release/linux-amd64-github-release upload --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${fileName}\" -file \"${vipPath}\""
 				}
 			}
 		}	
