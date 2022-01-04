@@ -7,7 +7,7 @@ pipeline {
 		INITIAL_RELEASE = 2021
 		RELEASE_TITLE = "Release"
 		GITHUB_CREDENTIALS = credentials('Jenkins-Astemes')
-		GITHUB_TOKEN = $GITHUB_CREDENTIALS_PWD
+		GITHUB_TOKEN = '$GITHUB_CREDENTIALS_PWD'
 	}
 	stages {
 		stage('Initialize Build System') {
