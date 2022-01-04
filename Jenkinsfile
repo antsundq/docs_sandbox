@@ -11,7 +11,7 @@ pipeline {
 		stage('Initialize Build System') {
 			steps {
 				dir ('buildsystem'){
-					git url: 'https://github.com/antsundq/build-system-sandbox.git',
+					git url: 'https://github.com/Astemes/astemes-buildsystem.git',
 						branch: 'main',
 						credentialsId: 'Jenkins-Astemes'
 					echo 'Build system pulled'
@@ -80,8 +80,8 @@ pipeline {
 						def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 						def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
 						def releaseName = "${RELEASE_TITLE} ${tag}"			
-						def vipPath = VIP_FILE_PATH
 						def releaseInfo = sh(returnStdout: true, script: "./linux-amd64-github-release -h")
+						def vipPath = VIP_FILE_PATH
 						echo releaseInfo
 					}
 				}
