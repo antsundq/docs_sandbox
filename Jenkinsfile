@@ -86,7 +86,7 @@ pipeline {
 						sh "chmod 777 ./linux-amd64-github-release"
 						def releaseInfo = sh(returnStdout: true, script: "./linux-amd64-github-release -h")
 						def vipPath = VIP_FILE_PATH
-						sh "./linux-amd64-github-release release --user ${user} --repo ${repo} --tag ${tag} --name ${releaseName} --description ${message} --pre-release"
+						sh "./linux-amd64-github-release release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --pre-release"
 					}
 				}
 			}
