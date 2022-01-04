@@ -78,7 +78,7 @@ pipeline {
 		stage('Release') {
 			steps{
 				script{
-					def tag = "test4"
+					def tag = "test6"
 					//def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 					def user = "sunqn"
 					def repo = "docs_sandbox"
@@ -88,7 +88,7 @@ pipeline {
 					def releaseInfo = sh(returnStdout: true, script: "./buildsystem/github_release/linux-amd64-github-release -h")
 					def vipPath = VIP_FILE_PATH
 					def fileName = "VIPM_Package.txt"
-					//sh "./buildsystem/github_release/linux-amd64-github-release release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --pre-release"
+					sh "./buildsystem/github_release/linux-amd64-github-release release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --pre-release"
 					sh "./buildsystem/github_release/linux-amd64-github-release upload --user ${user} --repo ${repo} --tag \"${tag}\" --name \'${fileName}\' --file \"${vipPath}\""
 				}
 			}
