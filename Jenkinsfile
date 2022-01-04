@@ -82,7 +82,8 @@ pipeline {
 					//def tag = sh(returnStdout: true, script: "git tag --contains").trim()
 					def user = "sunqn"
 					def repo = "docs_sandbox"
-					def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
+					//def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
+					def message = "Message"
 					def releaseName = "${RELEASE_TITLE} ${tag}"			
 					sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					//def releaseInfo = sh(returnStdout: true, script: "./buildsystem/github_release/linux-amd64-github-release -h")
