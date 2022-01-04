@@ -78,12 +78,14 @@ pipeline {
 				dir ('buildsystem/github_release'){
 					script{
 						def tag = sh(returnStdout: true, script: "git tag --contains").trim()
+						def user = "sunqn"
+						def repo = "docs_sandbox"
 						def message = sh(returnStdout: true, script: "git tag -n99 -l ${tag}")
 						def releaseName = "${RELEASE_TITLE} ${tag}"			
 						sh "chmod 777 ./linux-amd64-github-release"
 						def releaseInfo = sh(returnStdout: true, script: "./linux-amd64-github-release -h")
 						def vipPath = VIP_FILE_PATH
-						echo releaseInfo
+						sh "./linux-amd64-github-release --user ${user} --repo ${repo} --tag ${tag} --name ${releaseName} --description ${message} --pre-release"
 					}
 				}
 			}
