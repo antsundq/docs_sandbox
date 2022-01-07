@@ -74,12 +74,12 @@ pipeline {
 				echo 'Documentation deployed'
 				script{
 					echo "START"
-					def tag = bat(returnStdout: true, script: "git tag --contains").trim()
+					def tag = bat(returnStdout: true, script: "@git tag --contains").trim()
 					echo "TAG ${tag}"
 					echo tag
 					def user = "${GITHUB_USER}"
 					def repo = "${GITHUB_REPO}"
-					def message = bat(returnStdout: true, script: "git tag -n99 -l ${tag}")
+					def message = bat(returnStdout: true, script: "@git tag -n99 -l ${tag}")
 					echo message
 					def releaseName = "${RELEASE_TITLE} ${tag}"
 					//sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
