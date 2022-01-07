@@ -73,11 +73,11 @@ pipeline {
 				bat 'mkdocs gh-deploy --force'
 				echo 'Documentation deployed'
 				script{
-					def tag = "v1.0.11" 
+					def tag = "v1.0.10" 
 					//bat(returnStdout: true, script: "@git tag --contains").trim()
 					def user = "${GITHUB_USER}"
 					def repo = "${GITHUB_REPO}"
-					def message = bat(returnStdout: true, script: "@git tag -n99 -l ${tag}")
+					def message = bat(returnStdout: true, script: "@git tag -n99 -l ${tag}").replaceAll("[\\n]", "^\\n")
 					def releaseName = "${RELEASE_TITLE} ${tag}"
 					//sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					def vipPath = VIP_FILE_PATH
