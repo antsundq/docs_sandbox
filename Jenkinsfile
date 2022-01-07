@@ -36,7 +36,7 @@ pipeline {
 				dir ('buildsystem'){
 					bat 'python -m venv .venv'
 					bat '.venv\\scripts\\activate'
-					bat 'pip install -r requirements.txt'
+					bat 'python -m pip install -r requirements.txt'
 				}
 				echo 'Python environment initialized'
 			}
