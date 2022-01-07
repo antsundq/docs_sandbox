@@ -32,7 +32,7 @@ pipeline {
 		stage('Initialize Python venv') {
 			steps {
 				dir ('buildsystem'){
-					bat 'python3 -m venv .venv'
+					bat 'python -m venv .venv'
 					bat '.venv\\scripts\\activate'
 					bat 'pip install -r requirements.txt'
 				}
