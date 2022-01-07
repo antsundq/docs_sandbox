@@ -28,8 +28,8 @@ pipeline {
 					echo 'Build system pulled'
 				}
 				bat 'git fetch'
-				bat "mkdir ${WORKSPACE}\\${REPORT_PATH}"
-				bat "mkdir ${WORKSPACE}\\${LOG_PATH}"
+				bat "if not exist ${WORKSPACE}\\${REPORT_PATH} mkdir ${WORKSPACE}\\${REPORT_PATH}"
+				bat "if not exist ${WORKSPACE}\\${LOG_PATH} mkdir ${WORKSPACE}\\${LOG_PATH}"
 			}
 		}
 		stage('Initialize Python venv') {
