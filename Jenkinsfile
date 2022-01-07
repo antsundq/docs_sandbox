@@ -89,11 +89,13 @@ pipeline {
 			}
 		}	
 	}
+	/**
 	post{
 		always{
-			//junit "${REPORT_PATH}/*.xml"
+			junit "${REPORT_PATH}/*.xml"
 		}
 	}
+	**/
 	options {
 		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
 	}
