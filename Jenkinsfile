@@ -52,9 +52,9 @@ pipeline {
 
 				script{
 					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
-					echo version
 					String rawOut = bat(returnStdout: true, script: "@LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
-					def index = rawOut.indexOf("Operation output:\n")
+					echo rawOut
+					def index = rawOut.indexOf("Operation output:")
 					echo index
 					String buildOut = rawOut.substring(index)
 					echo "buildOut: ${buildOut}"
