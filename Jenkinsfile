@@ -55,11 +55,11 @@ pipeline {
 					echo "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default"
 					VIP_FILE_PATH = bat(returnStdout: true, script: "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
 					echo "${VIP_FILE_PATH}"
-
-				dir('buildsystem/mkdocs_builder'){
-					bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
+					dir('buildsystem/mkdocs_builder'){
+						bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
+					}
+					bat 'mkdocs build'
 				}
-				bat 'mkdocs build'
 			}
 		}
 		stage('Deploy') {
@@ -84,7 +84,7 @@ pipeline {
 					bat "./buildsystem/github_release/linux-amd64-github-release upload --user ${user} --repo ${repo} --tag '${tag}' --name '${fileName}' --file '${vipPath}'"
 				}
 			}
-		}	
+		}
 	}
 	post{
 		always{
