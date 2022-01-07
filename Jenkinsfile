@@ -54,6 +54,8 @@ pipeline {
 					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
 					echo "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default"
 					VIP_FILE_PATH = bat(returnStdout: true, script: "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
+					echo "VIPPATH"
+					echo "test ${VIP_FILE_PATH}"
 					echo VIP_FILE_PATH
 					
 					dir('buildsystem/mkdocs_builder'){
@@ -81,6 +83,8 @@ pipeline {
 					def releaseName = "${RELEASE_TITLE} ${tag}"
 					//sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					def vipPath = VIP_FILE_PATH
+					echo "test ${VIP_FILE_PATH}"
+					echo VIP_FILE_PATH
 					echo vipPath
 					def fileName = "VIPM_Package.txt"
 					//Create Release
