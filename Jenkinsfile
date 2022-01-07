@@ -91,7 +91,7 @@ pipeline {
 	}
 	post{
 		always{
-			junit "${REPORT_PATH}/*.xml"
+			junit "${WORKSPACE}\\${REPORT_PATH}\\*.xml"
 		}
 	}
 	options {
