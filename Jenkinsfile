@@ -92,7 +92,7 @@ pipeline {
 	}
 	post{
 		always{
-			echo ${WORKSPACE}\\${REPORT_PATH}\\*.xml"
+			echo "${WORKSPACE}\\${REPORT_PATH}\\*.xml"
 			junit "${WORKSPACE}\\${REPORT_PATH}\\*.xml"
 		}
 	}
