@@ -28,6 +28,7 @@ pipeline {
 					echo 'Build system pulled'
 				}
 				bat 'git fetch'
+				bat "rm *.vip"
 				bat "if not exist ${WORKSPACE}\\${REPORT_PATH} mkdir ${WORKSPACE}\\${REPORT_PATH}"
 				bat "if not exist ${WORKSPACE}\\${LOG_PATH} mkdir ${WORKSPACE}\\${LOG_PATH}"
 			}
@@ -96,7 +97,6 @@ pipeline {
 	}
 	post{
 		always{
-			echo "${WORKSPACE}\\${REPORT_PATH}\\*.xml"
 			junit "${REPORT_PATH}\\*.xml"
 		}
 	}
