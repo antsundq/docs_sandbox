@@ -1,7 +1,5 @@
 pipeline {
-	agent {
-		any
-	}
+	agent any
 	environment{
 		PROJECT_TITLE = "Docs Sandbox"
 		REPORT_PATH = "reports"
