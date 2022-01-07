@@ -29,7 +29,7 @@ pipeline {
 				}
 				bat 'git fetch'
 				
-				bat "del *.vip"
+				//bat "del *.vip"
 				bat "if not exist ${WORKSPACE}\\${REPORT_PATH} mkdir ${WORKSPACE}\\${REPORT_PATH}"
 				bat "if not exist ${WORKSPACE}\\${LOG_PATH} mkdir ${WORKSPACE}\\${LOG_PATH}"
 				
@@ -40,7 +40,7 @@ pipeline {
 				}
 				echo 'Python environment initialized'
 			}
-		}
+		}/*
 		stage('Test') {
 			steps {
 				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${WORKSPACE}\\${REPORT_PATH}\\lunit.xml\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
@@ -62,18 +62,20 @@ pipeline {
 					bat 'mkdocs build'
 				}
 			}
-		}
+		}*/
 		stage('Deploy') {
-			when{
+			/**when{
 				expression{
 					return script {bat(returnStdout: true, script: "@git tag --contains").trim()}
 				}
-			}
+			}*/
 			steps{
-				bat 'mkdocs gh-deploy --force'
+				//bat 'mkdocs gh-deploy --force'
 				echo 'Documentation deployed'
 				script{
+					echo "START"
 					def tag = bat(returnStdout: true, script: "git tag --contains").trim()
+					echo "TAG ${tag}"
 					echo tag
 					def user = "${GITHUB_USER}"
 					def repo = "${GITHUB_REPO}"
