@@ -12,7 +12,7 @@ pipeline {
 		GITHUB_TOKEN = credentials('github-token')
 		LV_PROJECT_PATH = "source\\test.lvproj"
 		LV_VIPB_PATH = "source\\test.vipb"
-		LV_BUILD_SPEC = "Triarc Framework"
+		LV_BUILD_SPEC = "Demo"
 		LV_TARGET_NAME = "My Computer"
 		LV_PORT_NUMBER = 3363
 		LV_VERSION = "20.0"
