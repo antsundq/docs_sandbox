@@ -1,6 +1,6 @@
 pipeline {
 	agent {
-		label 'LabVIEW2020*'
+		any
 	}
 	environment{
 		PROJECT_TITLE = "Docs Sandbox"
