@@ -84,7 +84,9 @@ pipeline {
 					def vipPath = VIP_FILE_PATH
 					echo vipPath
 					def fileName = "VIPM_Package.txt"
+					//Create Release
 					bat "./buildsystem/github_release/linux-amd64-github-release release --user ${user} --repo ${repo} --tag '${tag}' --name '${releaseName}' --description '${message}' --draft"
+					//Upload VIP file
 					bat "./buildsystem/github_release/linux-amd64-github-release upload --user ${user} --repo ${repo} --tag '${tag}' --name '${fileName}' --file '${vipPath}'"
 				}
 			}
