@@ -53,7 +53,7 @@ pipeline {
 				script{
 					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
 					echo "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default"
-					VIP_FILE_PATH = bat(returnStdout: true, script: "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
+					VIP_FILE_PATH = bat(returnStdout: true, script: "@LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
 					echo "VIPPATH"
 					echo "test ${VIP_FILE_PATH}"
 					echo VIP_FILE_PATH
@@ -79,7 +79,7 @@ pipeline {
 					//bat(returnStdout: true, script: "@git tag --contains").trim()
 					def user = "${GITHUB_USER}"
 					def repo = "${GITHUB_REPO}"
-					def message = bat(returnStdout: true, script: "@git tag -n99 -l ${tag}").replaceAll("[\\n]", "^\\n")
+					def message = bat(returnStdout: true, script: "@git tag -n99 -l ${tag}").replaceAll("[\\n]", "")
 					def releaseName = "${RELEASE_TITLE} ${tag}"
 					//sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					def vipPath = VIP_FILE_PATH
