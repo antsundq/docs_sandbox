@@ -84,9 +84,9 @@ pipeline {
 					echo vipPath
 					def fileName = "VIPM_Package.txt"
 					//Create Release
-					bat "buildsystem\\github_release\\github-release.exe release --user ${user} --repo ${repo} --tag '${tag}' --name '${releaseName}' --description '${message}' --draft"
+					bat "buildsystem\\github_release\\github-release.exe release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --draft"
 					//Upload VIP file
-					bat "buildsystem\\github_release\\github-release.exe upload --user ${user} --repo ${repo} --tag '${tag}' --name '${fileName}' --file '${vipPath}'"
+					bat "buildsystem\\github_release\\github-release.exe upload --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${fileName}\" --file \"${vipPath}\""
 				}
 			}
 		}
