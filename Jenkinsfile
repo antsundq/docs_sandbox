@@ -53,6 +53,7 @@ pipeline {
 			steps {
 				script{
 					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? fix : build
+					echo "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default"
 					VIP_FILE_PATH = bat(returnStdout: true, script: "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
 				}
 			}
@@ -91,6 +92,7 @@ pipeline {
 	}
 	post{
 		always{
+			echo ${WORKSPACE}\\${REPORT_PATH}\\*.xml"
 			junit "${WORKSPACE}\\${REPORT_PATH}\\*.xml"
 		}
 	}
