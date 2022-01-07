@@ -10,6 +10,7 @@
 		<Property Name="server.vi.callsEnabled" Type="Bool">true</Property>
 		<Property Name="server.vi.propertiesEnabled" Type="Bool">true</Property>
 		<Property Name="specify.custom.address" Type="Bool">false</Property>
+		<Item Name="My Test Case 2.lvclass" Type="LVClass" URL="../My Test Case 2/My Test Case 2.lvclass"/>
 		<Item Name="My Test Case.lvclass" Type="LVClass" URL="../My Test Case/My Test Case.lvclass"/>
 		<Item Name="Untitled 1.vi" Type="VI" URL="../Untitled 1.vi"/>
 		<Item Name="Dependencies" Type="Dependencies">
