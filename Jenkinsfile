@@ -29,7 +29,7 @@ pipeline {
 				}
 				bat 'git fetch'
 				
-				//bat "del *.vip"
+				bat "del *.vip"
 				bat "if not exist ${WORKSPACE}\\${REPORT_PATH} mkdir ${WORKSPACE}\\${REPORT_PATH}"
 				bat "if not exist ${WORKSPACE}\\${LOG_PATH} mkdir ${WORKSPACE}\\${LOG_PATH}"
 				
