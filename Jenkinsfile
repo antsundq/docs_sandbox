@@ -28,20 +28,17 @@ pipeline {
 					echo 'Build system pulled'
 				}
 				bat 'git fetch'
+				
 				bat "rm *.vip"
 				bat "if not exist ${WORKSPACE}\\${REPORT_PATH} mkdir ${WORKSPACE}\\${REPORT_PATH}"
 				bat "if not exist ${WORKSPACE}\\${LOG_PATH} mkdir ${WORKSPACE}\\${LOG_PATH}"
-			}
-		}
-		stage('Initialize Python venv') {
-			steps {
+				
 				dir ('buildsystem'){
 					bat 'python -m venv .venv'
 					bat '.venv\\scripts\\activate'
 					bat 'pip install -r requirements.txt'
 				}
 				echo 'Python environment initialized'
-			}
 		}
 		stage('Test') {
 			steps {
@@ -51,20 +48,13 @@ pipeline {
 		stage('Build') {
 			steps {
 				bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName \"${LV_TARGET_NAME}\" -BuildSpecName \"${LV_BUILD_SPEC}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
-			}
-		}
-		stage('Build VIP') {
-			steps {
+
 				script{
 					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
 					echo "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default"
 					VIP_FILE_PATH = bat(returnStdout: true, script: "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
 					echo "${VIP_FILE_PATH}"
-				}
-			}
-		}
-		stage('Generate Docs'){
-			steps{
+
 				dir('buildsystem/mkdocs_builder'){
 					bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
 				}
