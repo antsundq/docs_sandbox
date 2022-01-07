@@ -57,7 +57,7 @@ pipeline {
 					//String rawOut = bat(returnStdout: true, script: "@LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
 					String rawOut="Some text\nOperation output:\nC:\\Users\\Bob\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\docs_sandbox_main\\astemes_lib_test-1.0.0.4.vip\nBuildVIP operation succeeded.";
 					echo rawOut
-					def index = rawOut.indexOf("Operation output:")
+					//def index = rawOut.indexOf("Operation output:")
 					index=0
 					echo index
 					String buildOut = rawOut.substring(index)
