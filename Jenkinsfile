@@ -19,7 +19,7 @@ pipeline {
 		LV_VERSION = "20.0"
 	}
 	stages {
-		stage('Initialize Build System') {
+		stage('Initialize') {
 			steps {
 				dir ('buildsystem'){
 					git url: 'https://github.com/Astemes/astemes-build-support.git',
@@ -54,7 +54,8 @@ pipeline {
 					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
 					echo "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default"
 					VIP_FILE_PATH = bat(returnStdout: true, script: "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
-					echo "${VIP_FILE_PATH}"
+					echo VIP_FILE_PATH
+					
 					dir('buildsystem/mkdocs_builder'){
 						bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
 					}
@@ -70,13 +71,13 @@ pipeline {
 			}
 			steps{
 				bat 'mkdocs gh-deploy --force'
-				echo 'Project deployed'
+				echo 'Documentation deployed'
 				script{
 					def tag = bat(returnStdout: true, script: "git tag --contains").trim()
 					def user = "${GITHUB_USER}"
 					def repo = "${GITHUB_REPO}"
 					def message = bat(returnStdout: true, script: "git tag -n99 -l ${tag}")
-					def releaseName = "${RELEASE_TITLE} ${tag}"			
+					def releaseName = "${RELEASE_TITLE} ${tag}"
 					bat "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					def vipPath = VIP_FILE_PATH
 					def fileName = "VIPM_Package.txt"
