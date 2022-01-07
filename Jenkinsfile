@@ -74,12 +74,15 @@ pipeline {
 				echo 'Documentation deployed'
 				script{
 					def tag = bat(returnStdout: true, script: "git tag --contains").trim()
+					echo tag
 					def user = "${GITHUB_USER}"
 					def repo = "${GITHUB_REPO}"
 					def message = bat(returnStdout: true, script: "git tag -n99 -l ${tag}")
+					echo message
 					def releaseName = "${RELEASE_TITLE} ${tag}"
 					bat "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					def vipPath = VIP_FILE_PATH
+					echo vipPath
 					def fileName = "VIPM_Package.txt"
 					bat "./buildsystem/github_release/linux-amd64-github-release release --user ${user} --repo ${repo} --tag '${tag}' --name '${releaseName}' --description '${message}' --draft"
 					bat "./buildsystem/github_release/linux-amd64-github-release upload --user ${user} --repo ${repo} --tag '${tag}' --name '${fileName}' --file '${vipPath}'"
