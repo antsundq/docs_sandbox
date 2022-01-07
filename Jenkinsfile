@@ -39,6 +39,7 @@ pipeline {
 					bat 'pip install -r requirements.txt'
 				}
 				echo 'Python environment initialized'
+			}
 		}
 		stage('Test') {
 			steps {
