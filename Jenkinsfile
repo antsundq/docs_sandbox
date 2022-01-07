@@ -41,19 +41,19 @@ pipeline {
 		}		
 		stage('Test') {
 			steps {
-				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${WORKSPACE}\\${REPORT_PATH}\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\logs\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
+				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${WORKSPACE}\\${REPORT_PATH}\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
 			}
 		}
 		stage('Build') {
 			steps {
-				bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName '${LV_TARGET_NAME}' -BuildSpecName '${LV_BUILD_SPEC}' -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\logs\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
+				bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName '${LV_TARGET_NAME}' -BuildSpecName '${LV_BUILD_SPEC}' -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
 			}
 		}
 		stage('Build VIP') {
 			steps {
 				script{
 					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? fix : build
-					VIP_FILE_PATH = bat "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion '${version}' -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\logs\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default"
+					VIP_FILE_PATH = bat "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion '${version}' -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default"
 				}
 			}
 		}
