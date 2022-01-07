@@ -70,7 +70,7 @@ pipeline {
 				}
 			}*/
 			steps{
-				bat 'mkdocs gh-deploy --force'
+				bat 'python -m mkdocs gh-deploy --force'
 				echo 'Documentation deployed'
 				script{
 					def tag = "v1.0.10" 
