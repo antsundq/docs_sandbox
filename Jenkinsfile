@@ -82,7 +82,7 @@ pipeline {
 					def message = bat(returnStdout: true, script: "git tag -n99 -l ${tag}")
 					echo message
 					def releaseName = "${RELEASE_TITLE} ${tag}"
-					bat "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
+					//sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					def vipPath = VIP_FILE_PATH
 					echo vipPath
 					def fileName = "VIPM_Package.txt"
