@@ -44,7 +44,7 @@ pipeline {
 		}
 		stage('Test') {
 			steps {
-				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${WORKSPACE}\\${REPORT_PATH}\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
+				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${WORKSPACE}\\${REPORT_PATH}\\lunit.xml\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
 			}
 		}
 		stage('Build') {
