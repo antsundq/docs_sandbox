@@ -40,7 +40,7 @@ pipeline {
 				}
 				echo 'Python environment initialized'
 			}
-		}/*
+		}
 		stage('Test') {
 			steps {
 				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${WORKSPACE}\\${REPORT_PATH}\\lunit.xml\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
@@ -62,7 +62,7 @@ pipeline {
 					bat 'mkdocs build'
 				}
 			}
-		}*/
+		}
 		stage('Deploy') {
 			/**when{
 				expression{
@@ -70,17 +70,13 @@ pipeline {
 				}
 			}*/
 			steps{
-				//bat 'mkdocs gh-deploy --force'
+				bat 'mkdocs gh-deploy --force'
 				echo 'Documentation deployed'
 				script{
-					echo "START"
 					def tag = bat(returnStdout: true, script: "@git tag --contains").trim()
-					echo "TAG ${tag}"
-					echo tag
 					def user = "${GITHUB_USER}"
 					def repo = "${GITHUB_REPO}"
 					def message = bat(returnStdout: true, script: "@git tag -n99 -l ${tag}")
-					echo message
 					def releaseName = "${RELEASE_TITLE} ${tag}"
 					//sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					def vipPath = VIP_FILE_PATH
