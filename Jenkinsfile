@@ -10,7 +10,7 @@ pipeline {
 		INITIAL_RELEASE = 2021
 		RELEASE_TITLE = "Release"
 		GITHUB_TOKEN = credentials('github-token')
-		LV_PROJECT_PATH = "test.lvproj"
+		LV_PROJECT_PATH = "source\\test.lvproj"
 		LV_VIPB_PATH = "test.vipb"
 		LV_BUILD_SPEC = "Triarc Framework"
 		LV_TARGET_NAME = "My Computer"
@@ -41,7 +41,7 @@ pipeline {
 		}		
 		stage('Test') {
 			steps {
-				bat "LabVIEWCLI -OperationName LUnit -ProjectPath '${LV_PROJECT_PATH}' -TestRunners	8 -ReportPath '${REPORT_PATH}' -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath '${WORKSPACE}\\logs\\LabVIEWCLI_LUnit.txt' -LogToConsole true -Verbosity Default"
+				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${REPORT_PATH}\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\logs\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
 			}
 		}
 		stage('Build') {
