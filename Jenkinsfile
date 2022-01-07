@@ -58,6 +58,7 @@ pipeline {
 					String rawOut="Some text\nOperation output:\nC:\\Users\\Bob\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\docs_sandbox_main\\astemes_lib_test-1.0.0.4.vip\nBuildVIP operation succeeded.";
 					echo rawOut
 					def index = rawOut.indexOf("Operation output:")
+					index=0
 					echo index
 					String buildOut = rawOut.substring(index)
 					echo "buildOut: ${buildOut}"
