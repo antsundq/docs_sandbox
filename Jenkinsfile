@@ -11,7 +11,7 @@ pipeline {
 		RELEASE_TITLE = "Release"
 		GITHUB_TOKEN = credentials('github-token')
 		LV_PROJECT_PATH = "source\\test.lvproj"
-		LV_VIPB_PATH = "test.vipb"
+		LV_VIPB_PATH = "source\\test.vipb"
 		LV_BUILD_SPEC = "Triarc Framework"
 		LV_TARGET_NAME = "My Computer"
 		LV_PORT_NUMBER = 3363
@@ -41,19 +41,19 @@ pipeline {
 		}		
 		stage('Test') {
 			steps {
-				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${REPORT_PATH}\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\logs\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
+				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${WORKSPACE}\\${REPORT_PATH}\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\logs\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
 			}
 		}
 		stage('Build') {
 			steps {
-				bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath '${LV_PROJECT_PATH}' -TargetName '${LV_TARGET_NAME}' -BuildSpecName '${LV_BUILD_SPEC}' -PortNumber ${LV_PORT_NUMBER} -LogFilePath  '${WORKSPACE}/logs/LabVIEWCLI_ExecuteBuildSpec.txt' -LogToConsole true -Verbosity Default"
+				bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName '${LV_TARGET_NAME}' -BuildSpecName '${LV_BUILD_SPEC}' -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\logs\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
 			}
 		}
 		stage('Build VIP') {
 			steps {
 				script{
 					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? fix : build
-					VIP_FILE_PATH = bat "LabVIEWCLI -OperationName BuildVIP -VIPBPath '${LV_VIPB_PATH}' -LabVIEWVersion ${LV_VERSION} -IncrementVersion '${version}' -PortNumber ${LV_PORT_NUMBER} -LogFilePath  '${WORKSPACE}/logs/LabVIEWCLI_BuildVIP.txt' -LogToConsole true -Verbosity Default"
+					VIP_FILE_PATH = bat "LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion '${version}' -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\logs\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default"
 				}
 			}
 		}
@@ -89,13 +89,11 @@ pipeline {
 			}
 		}	
 	}
-	/**
 	post{
 		always{
 			junit "${REPORT_PATH}/*.xml"
 		}
 	}
-	**/
 	options {
 		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
 	}
