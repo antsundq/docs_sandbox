@@ -73,7 +73,8 @@ pipeline {
 				bat 'mkdocs gh-deploy --force'
 				echo 'Documentation deployed'
 				script{
-					def tag = bat(returnStdout: true, script: "@git tag --contains").trim()
+					def tag = "v1.0.11" 
+					//bat(returnStdout: true, script: "@git tag --contains").trim()
 					def user = "${GITHUB_USER}"
 					def repo = "${GITHUB_REPO}"
 					def message = bat(returnStdout: true, script: "@git tag -n99 -l ${tag}")
@@ -83,9 +84,9 @@ pipeline {
 					echo vipPath
 					def fileName = "VIPM_Package.txt"
 					//Create Release
-					bat "buildsystem\\github_release\\linux-amd64-github-release release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --draft"
+					bat "buildsystem\\github_release\\github-release.exe release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --draft"
 					//Upload VIP file
-					bat "buildsystem\\github_release\\linux-amd64-github-release upload --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${fileName}\" --file \"${vipPath}\""
+					bat "buildsystem\\github_release\\github-release.exe upload --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${fileName}\" --file \"${vipPath}\""
 				}
 			}
 		}
