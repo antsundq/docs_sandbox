@@ -54,18 +54,14 @@ pipeline {
 
 				script{
 					try{					
-					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
-					//String rawOut = bat(returnStdout: true, script: "@LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
-					String rawOut="Some text\nOperation output:\nC:\\Users\\Bob\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\docs_sandbox_main\\astemes_lib_test-1.0.0.4.vip\nBuildVIP operation succeeded.";
-					echo rawOut
-					def index = rawOut.indexOf('Operation output:')
-					echo index.toString()
-					String buildOut = rawOut.substring(index)
-					echo "buildOut: ${buildOut}"
-					String[] buildOutRows = buildOut.split("\\n")
-					echo "buildOutRows: ${buildOutRows}"
-					VIP_FILE_PATH = buildOutRows[1]
-					echo "VIP_FILE_PATH: \n${VIP_FILE_PATH}"
+						def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
+						//String rawOut = bat(returnStdout: true, script: "@LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
+						String rawOut="Some text\nOperation output:\nC:\\Users\\Bob\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\docs_sandbox_main\\astemes_lib_test-1.0.0.4.vip\nBuildVIP operation succeeded.";
+						def index = rawOut.indexOf('Operation output:')
+						String buildOut = rawOut.substring(index)
+						String[] buildOutRows = buildOut.split("\\n")
+						VIP_FILE_PATH = buildOutRows[1]
+						echo "VIP_FILE_PATH: \n${VIP_FILE_PATH}"
 					}
 					catch (err){
 						echo "${err}"
