@@ -40,8 +40,7 @@ pipeline {
 		stage('Deploy') {
 			when{
 				expression{
-					//return "${COMMIT_TAG}"
-					return bat(returnStdout: true, script: "@git tag --contains").trim()
+					"${COMMIT_TAG}"
 				}
 			}
 			environment{
