@@ -46,7 +46,7 @@ pipeline {
 				}
 			}
 			steps{
-				bat 'python -m mkdocs gh-deploy --force'
+				deployGithubPages()
 				echo 'Documentation deployed'
 				script{
 					def tag = "v1.0.10" 
