@@ -36,8 +36,8 @@ pipeline {
 				dir("build_support"){
 					pullBuildSupport()
 					initPythonVenv "requirements.txt"
-					buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
 				}
+				buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
 			}
 		}
 		stage('Deploy') {
