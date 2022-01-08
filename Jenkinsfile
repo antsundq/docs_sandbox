@@ -20,7 +20,14 @@ pipeline {
 	}
 	stages {
 		stage('Initialize') {
-			steps {
+			steps {				
+				dir ('buildsystem'){
+					git url: 'https://github.com/Astemes/astemes-build-support.git',
+						branch: 'main',
+						credentialsId: 'Jenkins-Astemes'
+					echo 'Build system pulled'
+				}
+				bat 'git fetch'
 				initWorkspace()
 				initPythonVenv "requirements.txt"
 			}
