@@ -7,7 +7,6 @@ pipeline {
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
 		RELEASE_TITLE = "Release"
-		GITHUB_TOKEN = credentials('github-token')
 		LV_PROJECT_PATH = "source\\test.lvproj"
 		LV_VIPB_PATH = "source\\test.vipb"
 		LV_BUILD_SPEC = "Demo"
@@ -41,8 +40,11 @@ pipeline {
 		stage('Deploy') {
 			when{
 				expression{
-					return COMMIT_TAG
+					return "${COMMIT_TAG}"
 				}
+			}
+			environment{
+				GITHUB_TOKEN = credentials('github-token')
 			}
 			steps{
 				deployGithubPages()
