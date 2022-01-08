@@ -89,7 +89,8 @@ pipeline {
 					def releaseName = "${RELEASE_TITLE} ${tag}"
 					//sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
 					def vipPath = VIP_FILE_PATH
-					def fileName = "VIPM_Package.txt"
+					File f = new File(vipPath)
+					fileName = f.getName()
 					//Create Release
 					bat "buildsystem\\github_release\\github-release.exe release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --draft"
 					//Upload VIP file
