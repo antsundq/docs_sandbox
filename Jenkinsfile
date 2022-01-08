@@ -56,7 +56,7 @@ pipeline {
 					try{
 					def test = "Hello"
 					echo test
-					echo test.indexOf("e")
+					echo test.indexOf("e").toString()
 					}
 					catch (err){
 						echo "${err}"
