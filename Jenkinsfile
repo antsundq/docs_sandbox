@@ -21,20 +21,14 @@ pipeline {
 	stages {
 		stage('Initialize') {
 			steps {
-				
-				bat "del *.vip"
-				bat "if not exist ${WORKSPACE}\\${REPORT_PATH} mkdir ${WORKSPACE}\\${REPORT_PATH}"
-				bat "if not exist ${WORKSPACE}\\${LOG_PATH} mkdir ${WORKSPACE}\\${LOG_PATH}"
-			
-				bat 'python -m venv .venv'
-				bat '.venv\\scripts\\activate'
-				bat 'python -m pip install -r requirements.txt'
-				echo 'Python environment initialized'
+				initWorkspace()
+				initPythonVenv "requirements.txt"
 			}
 		}
 		stage('Test') {
 			steps {
-				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${WORKSPACE}\\${REPORT_PATH}\\lunit.xml\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
+				runLUnit "${WORKSPACE}\\${LV_PROJECT_PATH}", "${WORKSPACE}\\${REPORT_PATH}"
+				
 			}
 		}
 		stage('Build') {
@@ -54,20 +48,19 @@ pipeline {
 					catch (err){
 						echo "${err}"
 					}
-					dir('buildsystem/mkdocs_builder'){
-						bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
-					}
-					bat 'python -m mkdocs build'
 				}
+				dir('buildsystem/mkdocs_builder'){
+					bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
+				}
+				bat 'python -m mkdocs build'
 			}
 		}
 		stage('Deploy') {
-			/*
 			when{
 				expression{
 					return script {bat(returnStdout: true, script: "@git tag --contains").trim()}
 				}
-			}*/
+			}
 			steps{
 				bat 'python -m mkdocs gh-deploy --force'
 				echo 'Documentation deployed'
