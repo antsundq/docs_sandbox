@@ -13,7 +13,6 @@ pipeline {
 		COMMIT_TAG = "${bat(returnStdout: true, script: '@git fetch & git tag --contains').trim()}"
 	}
 	stages {
-
 		stage('Initialize') {
 			steps {
 				library 'astemes-build-support'
