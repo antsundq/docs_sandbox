@@ -23,13 +23,11 @@ pipeline {
 			steps {
 				library 'astemes-build-support'
 				initWorkspace()
-				initPythonVenv "requirements.txt"
 			}
 		}
 		stage('Test') {
 			steps {
 				runLUnit "${WORKSPACE}\\${LV_PROJECT_PATH}", "${WORKSPACE}\\${REPORT_PATH}"
-				
 			}
 		}
 		stage('Build') {
@@ -53,9 +51,9 @@ pipeline {
 					git url: 'https://github.com/Astemes/astemes-build-support.git',
 						branch: 'main',
 						credentialsId: 'Jenkins-Astemes'
-					echo 'Build system pulled'
+					bat 'git fetch'
+					initPythonVenv "requirements.txt"
 				}
-				bat 'git fetch'
 				dir('buildsystem/mkdocs_builder'){
 					bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
 				}
