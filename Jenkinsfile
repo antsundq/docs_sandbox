@@ -48,10 +48,11 @@ pipeline {
 			}
 			*/
 			steps{
+				echo "GHDeploy"
 				deployGithubPages()
 				echo 'Documentation deployed'
 				script{
-					def tag = "v1.0.10" 
+					def tag = "v1.0.11" 
 					//bat(returnStdout: true, script: "@git tag --contains").trim()
 					def user = "${GITHUB_USER}"
 					def repo = "${GITHUB_REPO}"
