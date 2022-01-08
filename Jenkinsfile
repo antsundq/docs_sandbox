@@ -3,7 +3,6 @@ pipeline {
 	environment{
 		PROJECT_TITLE = "Docs Sandbox"
 		REPORT_PATH = "reports"
-		LOG_PATH = "logs" //to be deleted
 		REPO_URL = "https://github.com/sunqn/docs_sandbox"
 		GITHUB_USER = "sunqn"
 		GITHUB_REPO = "docs_sandbox"
@@ -14,8 +13,6 @@ pipeline {
 		LV_PROJECT_PATH = "source\\test.lvproj"
 		LV_VIPB_PATH = "source\\test.vipb"
 		LV_BUILD_SPEC = "Demo"
-		LV_TARGET_NAME = "My Computer"//to be deleted
-		LV_PORT_NUMBER = 3363 //to be deleted
 		LV_VERSION = "20.0"
 	}
 	stages {
@@ -32,14 +29,14 @@ pipeline {
 		}
 		stage('Build') {
 			steps {
+				//Execute LabVIEW build spec
 				buildLVBuildSpec "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
+				//Build VIPM package
 				script{VIP_FILE_PATH = buildVIPackage "${WORKSPACE}\\${LV_VIPB_PATH}", "${LV_VERSION}"}
-				dir ('buildsystem'){
-					pullBuildSupport()
-					initPythonVenv "requirements.txt"
-					
-					bat 'python mkdocs_builder/mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
-				}
+				//Build mkdocs documentation
+				pullBuildSupport()
+				initPythonVenv "requirements.txt"
+				bat 'python mkdocs_builder/mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
 				bat 'python -m mkdocs build'
 			}
 		}
