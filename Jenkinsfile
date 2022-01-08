@@ -32,7 +32,7 @@ pipeline {
 		}
 		stage('Build') {
 			steps {
-				executeLVBuildSpec "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
+				executeLVBuildSpec.myComputer "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
 				
 				script{
 					try{
