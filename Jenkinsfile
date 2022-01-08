@@ -4,8 +4,6 @@ pipeline {
 		PROJECT_TITLE = "Docs Sandbox"
 		REPORT_PATH = "reports"
 		REPO_URL = "https://github.com/sunqn/docs_sandbox"
-		GITHUB_USER = "sunqn"
-		GITHUB_REPO = "docs_sandbox"
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
 		RELEASE_TITLE = "Release"
@@ -48,25 +46,8 @@ pipeline {
 			}
 			*/
 			steps{
-				echo "GHDeploy"
 				deployGithubPages()
-				echo 'Documentation deployed'
-				script{
-					def tag = "v1.0.11" 
-					//bat(returnStdout: true, script: "@git tag --contains").trim()
-					def user = "${GITHUB_USER}"
-					def repo = "${GITHUB_REPO}"
-					def message = bat(returnStdout: true, script: "@git tag -n99 -l ${tag}").replaceAll("[\\n]", "")
-					def releaseName = "${RELEASE_TITLE} ${tag}"
-					//sh "chmod 777 ./buildsystem/github_release/linux-amd64-github-release"
-					def vipPath = VIP_FILE_PATH
-					File f = new File(vipPath)
-					fileName = f.getName()
-					//Create Release
-					bat "buildsystem\\github_release\\github-release.exe release --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${releaseName}\" --description \"${message}\" --draft"
-					//Upload VIP file
-					bat "buildsystem\\github_release\\github-release.exe upload --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${fileName}\" --file \"${vipPath}\""
-				}
+				deployGithubRelease "${REPO_URL}", "${RELEASE_TITLE}", "${VIP_FILE_PATH}"
 			}
 		}
 	}
