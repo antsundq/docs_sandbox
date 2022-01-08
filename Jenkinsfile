@@ -21,27 +21,14 @@ pipeline {
 	stages {
 		stage('Initialize') {
 			steps {
-				/*
-				dir ('buildsystem'){
-					git url: 'https://github.com/Astemes/astemes-build-support.git',
-						branch: 'main',
-						credentialsId: 'Jenkins-Astemes'
-					echo 'Build system pulled'
-				}
-				bat 'git fetch'
-				*/
-				library 'astemes-build-support'
-				helloWorld()
-				echo "WALDO"
+				
 				bat "del *.vip"
 				bat "if not exist ${WORKSPACE}\\${REPORT_PATH} mkdir ${WORKSPACE}\\${REPORT_PATH}"
 				bat "if not exist ${WORKSPACE}\\${LOG_PATH} mkdir ${WORKSPACE}\\${LOG_PATH}"
-				
-				dir ('buildsystem'){
-					bat 'python -m venv .venv'
-					bat '.venv\\scripts\\activate'
-					bat 'python -m pip install -r requirements.txt'
-				}
+			
+				bat 'python -m venv .venv'
+				bat '.venv\\scripts\\activate'
+				bat 'python -m pip install -r requirements.txt'
 				echo 'Python environment initialized'
 			}
 		}
@@ -55,7 +42,7 @@ pipeline {
 				bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName \"${LV_TARGET_NAME}\" -BuildSpecName \"${LV_BUILD_SPEC}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
 
 				script{
-					try{					
+					try{
 						def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
 						String rawOut = bat(returnStdout: true, script: "@LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
 						def index = rawOut.indexOf('Operation output:')
