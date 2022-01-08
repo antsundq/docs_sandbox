@@ -21,6 +21,7 @@ pipeline {
 	stages {
 		stage('Initialize') {
 			steps {
+				/*
 				dir ('buildsystem'){
 					git url: 'https://github.com/Astemes/astemes-build-support.git',
 						branch: 'main',
@@ -28,7 +29,10 @@ pipeline {
 					echo 'Build system pulled'
 				}
 				bat 'git fetch'
-				
+				*/
+				library 'astemes-build-support'
+				helloWorld
+				echo "WALDO"
 				bat "del *.vip"
 				bat "if not exist ${WORKSPACE}\\${REPORT_PATH} mkdir ${WORKSPACE}\\${REPORT_PATH}"
 				bat "if not exist ${WORKSPACE}\\${LOG_PATH} mkdir ${WORKSPACE}\\${LOG_PATH}"
