@@ -32,7 +32,7 @@ pipeline {
 		}
 		stage('Build') {
 			steps {
-				executeLVBuildSpec "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
+				buildLVBuildSpec "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
 				VIP_FILE_PATH = buildVIPackage "${WORKSPACE}\\${LV_VIPB_PATH}", "${LV_VERSION}"
 				echo "Built package: ${VIP_FILE_PATH}"
 				
