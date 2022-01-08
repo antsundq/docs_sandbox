@@ -14,8 +14,8 @@ pipeline {
 		LV_PROJECT_PATH = "source\\test.lvproj"
 		LV_VIPB_PATH = "source\\test.vipb"
 		LV_BUILD_SPEC = "Demo"
-		LV_TARGET_NAME = "My Computer"
-		LV_PORT_NUMBER = 3363
+		LV_TARGET_NAME = "My Computer"//to be deleted
+		LV_PORT_NUMBER = 3363 //to be deleted
 		LV_VERSION = "20.0"
 	}
 	stages {
@@ -32,7 +32,8 @@ pipeline {
 		}
 		stage('Build') {
 			steps {
-				bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName \"${LV_TARGET_NAME}\" -BuildSpecName \"${LV_BUILD_SPEC}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
+				executeLVBuildSpec "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
+				
 				script{
 					try{
 						def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
