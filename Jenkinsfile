@@ -12,7 +12,7 @@ pipeline {
 		LV_VIPB_PATH = "source\\test.vipb"
 		LV_BUILD_SPEC = "Demo"
 		LV_VERSION = "20.0"
-		COMMIT_TAG = script {bat(returnStdout: true, script: "@git tag --contains").trim()}
+		COMMIT_TAG = "${bat(returnStdout: true, script: '@git tag --contains').trim()}"
 	}
 	stages {
 		stage('Initialize') {
@@ -46,7 +46,7 @@ pipeline {
 			}
 			steps{
 				deployGithubPages()
-				deployGithubRelease "${REPO_URL}", "${RELEASE_TITLE}", "${VIP_FILE_PATH}"
+				deployGithubRelease "${REPO_URL}", "${COMMIT_TAG}", "${VIP_FILE_PATH}"
 			}
 		}
 	}
