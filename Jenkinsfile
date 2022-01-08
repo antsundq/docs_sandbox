@@ -19,7 +19,6 @@ pipeline {
 		LV_VERSION = "20.0"
 	}
 	stages {
-	/*
 		stage('Initialize') {
 			steps {
 				dir ('buildsystem'){
@@ -47,16 +46,14 @@ pipeline {
 				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TestRunners 8 -ReportPath \"${WORKSPACE}\\${REPORT_PATH}\\lunit.xml\" -ClearIndex TRUE -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
 			}
 		}
-		*/
 		stage('Build') {
 			steps {
-				//bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName \"${LV_TARGET_NAME}\" -BuildSpecName \"${LV_BUILD_SPEC}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
+				bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName \"${LV_TARGET_NAME}\" -BuildSpecName \"${LV_BUILD_SPEC}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
 
 				script{
 					try{					
 						def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
-						//String rawOut = bat(returnStdout: true, script: "@LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
-						String rawOut="Some text\nOperation output:\nC:\\Users\\Bob\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\docs_sandbox_main\\astemes_lib_test-1.0.0.4.vip\nBuildVIP operation succeeded.";
+						String rawOut = bat(returnStdout: true, script: "@LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
 						def index = rawOut.indexOf('Operation output:')
 						String buildOut = rawOut.substring(index)
 						String[] buildOutRows = buildOut.split("\\n")
@@ -72,13 +69,14 @@ pipeline {
 					bat 'python -m mkdocs build'
 				}
 			}
-		}/*
+		}
 		stage('Deploy') {
+			/*
 			when{
 				expression{
 					return script {bat(returnStdout: true, script: "@git tag --contains").trim()}
 				}
-			}
+			}*/
 			steps{
 				bat 'python -m mkdocs gh-deploy --force'
 				echo 'Documentation deployed'
@@ -98,7 +96,7 @@ pipeline {
 					bat "buildsystem\\github_release\\github-release.exe upload --user ${user} --repo ${repo} --tag \"${tag}\" --name \"${fileName}\" --file \"${vipPath}\""
 				}
 			}
-		}*/
+		}
 	}
 	post{
 		always{
