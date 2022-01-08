@@ -40,11 +40,13 @@ pipeline {
 			}
 		}
 		stage('Deploy') {
+			/*
 			when{
 				expression{
 					return script {bat(returnStdout: true, script: "@git tag --contains").trim()}
 				}
 			}
+			*/
 			steps{
 				deployGithubPages()
 				echo 'Documentation deployed'
