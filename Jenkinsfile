@@ -2,8 +2,8 @@ pipeline {
 	agent any
 	environment{
 		PROJECT_TITLE = "Docs Sandbox"
-		REPORT_PATH = "reports"
 		REPO_URL = "https://github.com/sunqn/docs_sandbox"
+		REPORT_PATH = "reports"
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
 		LV_PROJECT_PATH = "source\\test.lvproj"
