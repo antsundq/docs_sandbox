@@ -33,20 +33,12 @@ pipeline {
 		stage('Build') {
 			steps {
 				buildLVBuildSpec "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
-				script{
-					VIP_FILE_PATH = buildVIPackage "${WORKSPACE}\\${LV_VIPB_PATH}", "${LV_VERSION}"
-				}
-				echo "Built package: ${VIP_FILE_PATH}"
-				
+				script{VIP_FILE_PATH = buildVIPackage "${WORKSPACE}\\${LV_VIPB_PATH}", "${LV_VERSION}"}
 				dir ('buildsystem'){
-					git url: 'https://github.com/Astemes/astemes-build-support.git',
-						branch: 'main',
-						credentialsId: 'Jenkins-Astemes'
-					bat 'git fetch'
+					pullBuildSupport()
 					initPythonVenv "requirements.txt"
-				}
-				dir('buildsystem/mkdocs_builder'){
-					bat 'python mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
+					
+					bat 'python mkdocs_builder/mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
 				}
 				bat 'python -m mkdocs build'
 			}
