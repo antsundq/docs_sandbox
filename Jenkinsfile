@@ -7,8 +7,8 @@ pipeline {
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
 		LV_PROJECT_PATH = "source\\test.lvproj"
-		LV_VIPB_PATH = "source\\test.vipb"
 		LV_BUILD_SPEC = "Demo"
+		LV_VIPB_PATH = "source\\test.vipb"
 		LV_VERSION = "20.0"
 		COMMIT_TAG = "${bat(returnStdout: true, script: '@git tag --contains').trim()}"
 	}
