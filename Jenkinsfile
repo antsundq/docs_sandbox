@@ -57,7 +57,7 @@ pipeline {
 						def index = rawOut.indexOf('Operation output:')
 						String buildOut = rawOut.substring(index)
 						String[] buildOutRows = buildOut.split("\\n")
-						VIP_FILE_PATH = buildOutRows[1]
+						VIP_FILE_PATH = buildOutRows[1].trim()
 						echo "VIP_FILE_PATH: \n${VIP_FILE_PATH}"
 					}
 					catch (err){
