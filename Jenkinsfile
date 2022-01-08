@@ -6,7 +6,6 @@ pipeline {
 		REPO_URL = "https://github.com/sunqn/docs_sandbox"
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
-		RELEASE_TITLE = "Release"
 		LV_PROJECT_PATH = "source\\test.lvproj"
 		LV_VIPB_PATH = "source\\test.vipb"
 		LV_BUILD_SPEC = "Demo"
@@ -24,23 +23,25 @@ pipeline {
 			steps {
 				runLUnit "${WORKSPACE}\\${LV_PROJECT_PATH}", "${WORKSPACE}\\${REPORT_PATH}"
 			}
-		}/*
+		}
 		stage('Build') {
 			steps {
 				//Execute LabVIEW build spec
 				buildLVBuildSpec "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
+				
 				//Build VIPM package
 				script{VIP_FILE_PATH = buildVIPackage "${WORKSPACE}\\${LV_VIPB_PATH}", "${LV_VERSION}"}
+				
 				//Build mkdocs documentation
 				pullBuildSupport()
 				initPythonVenv "requirements.txt"
 				buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
 			}
-		}*/
+		}
 		stage('Deploy') {
 			when{
 				expression{
-					"${COMMIT_TAG}"
+					return bat(returnStdout: true, script: "@git tag --contains").trim()
 				}
 			}
 			environment{
