@@ -36,8 +36,7 @@ pipeline {
 				//Build mkdocs documentation
 				pullBuildSupport()
 				initPythonVenv "requirements.txt"
-				bat 'python mkdocs_builder/mkdocs_builder.py --docs_path '+env.WORKSPACE +"\\docs --site_name \"${PROJECT_TITLE}\" --repo_url \"${REPO_URL}\" --author \"${AUTHOR}\" --initial_release ${INITIAL_RELEASE}"
-				bat 'python -m mkdocs build'
+				buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
 			}
 		}
 		stage('Deploy') {
