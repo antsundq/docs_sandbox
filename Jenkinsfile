@@ -33,9 +33,11 @@ pipeline {
 				script{VIP_FILE_PATH = buildVIPackage "${WORKSPACE}\\${LV_VIPB_PATH}", "${LV_VERSION}"}
 				
 				//Build mkdocs documentation
-				pullBuildSupport()
-				initPythonVenv "requirements.txt"
-				buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
+				dir("build_support"){
+					pullBuildSupport()
+					initPythonVenv "requirements.txt"
+					buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
+				}
 			}
 		}
 		stage('Deploy') {
