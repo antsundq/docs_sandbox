@@ -13,17 +13,18 @@ pipeline {
 		COMMIT_TAG = "${bat(returnStdout: true, script: '@git fetch & git tag --contains').trim()}"
 	}
 	stages {
+
+		stage('Initialize') {
 			when{
 				expression{
 					return "${COMMIT_TAG}"
 				}
 			}
-		stage('Initialize') {
 			steps {
 				library 'astemes-build-support'
 				initWorkspace()
 			}
-		}
+		}/*
 		stage('Test') {
 			steps {
 				runLUnit "${WORKSPACE}\\${LV_PROJECT_PATH}", "${WORKSPACE}\\${REPORT_PATH}"
@@ -58,7 +59,7 @@ pipeline {
 				deployGithubPages()
 				deployGithubRelease "${REPO_URL}", "${COMMIT_TAG}", "${VIP_FILE_PATH}"
 			}
-		}
+		}*/
 	}
 	post{
 		always{
