@@ -53,6 +53,8 @@ pipeline {
 				//bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName \"${LV_TARGET_NAME}\" -BuildSpecName \"${LV_BUILD_SPEC}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
 
 				script{
+					def test = "Hello"
+					echo test.indexOf("e")
 					def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
 					//String rawOut = bat(returnStdout: true, script: "@LabVIEWCLI -OperationName BuildVIP -VIPBPath \"${WORKSPACE}\\${LV_VIPB_PATH}\" -LabVIEWVersion ${LV_VERSION} -IncrementVersion \"${version}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_BuildVIP.txt\" -LogToConsole true -Verbosity Default")
 					String rawOut="Some text\nOperation output:\nC:\\Users\\Bob\\AppData\\Local\\Jenkins\\.jenkins\\workspace\\docs_sandbox_main\\astemes_lib_test-1.0.0.4.vip\nBuildVIP operation succeeded.";
