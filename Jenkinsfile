@@ -12,6 +12,7 @@ pipeline {
 		LV_VIPB_PATH = "source\\test.vipb"
 		LV_BUILD_SPEC = "Demo"
 		LV_VERSION = "20.0"
+		COMMIT_TAG = script {bat(returnStdout: true, script: "@git tag --contains").trim()}
 	}
 	stages {
 		stage('Initialize') {
@@ -24,7 +25,7 @@ pipeline {
 			steps {
 				runLUnit "${WORKSPACE}\\${LV_PROJECT_PATH}", "${WORKSPACE}\\${REPORT_PATH}"
 			}
-		}
+		}/*
 		stage('Build') {
 			steps {
 				//Execute LabVIEW build spec
@@ -36,15 +37,13 @@ pipeline {
 				initPythonVenv "requirements.txt"
 				buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
 			}
-		}
+		}*/
 		stage('Deploy') {
-			/*
 			when{
 				expression{
-					return script {bat(returnStdout: true, script: "@git tag --contains").trim()}
+					return COMMIT_TAG
 				}
 			}
-			*/
 			steps{
 				deployGithubPages()
 				deployGithubRelease "${REPO_URL}", "${RELEASE_TITLE}", "${VIP_FILE_PATH}"
