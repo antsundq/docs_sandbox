@@ -31,7 +31,7 @@ pipeline {
 				bat 'git fetch'
 				*/
 				library 'astemes-build-support'
-				helloWorld
+				helloWorld()
 				echo "WALDO"
 				bat "del *.vip"
 				bat "if not exist ${WORKSPACE}\\${REPORT_PATH} mkdir ${WORKSPACE}\\${REPORT_PATH}"
