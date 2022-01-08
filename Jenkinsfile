@@ -3,7 +3,7 @@ pipeline {
 	environment{
 		PROJECT_TITLE = "Docs Sandbox"
 		REPORT_PATH = "reports"
-		LOG_PATH = "logs"
+		LOG_PATH = "logs" //to be deleted
 		REPO_URL = "https://github.com/sunqn/docs_sandbox"
 		GITHUB_USER = "sunqn"
 		GITHUB_REPO = "docs_sandbox"
@@ -21,13 +21,14 @@ pipeline {
 	stages {
 		stage('Initialize') {
 			steps {
+				/*
 				dir ('buildsystem'){
 					git url: 'https://github.com/Astemes/astemes-build-support.git',
 						branch: 'main',
 						credentialsId: 'Jenkins-Astemes'
 					echo 'Build system pulled'
 				}
-				bat 'git fetch'
+				bat 'git fetch'*/
 				library 'astemes-build-support'
 				initWorkspace()
 				initPythonVenv "requirements.txt"
