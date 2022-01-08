@@ -42,7 +42,6 @@ pipeline {
 		stage('Build') {
 			steps {
 				bat "LabVIEWCLI -OperationName ExecuteBuildSpec -ProjectPath \"${WORKSPACE}\\${LV_PROJECT_PATH}\" -TargetName \"${LV_TARGET_NAME}\" -BuildSpecName \"${LV_BUILD_SPEC}\" -PortNumber ${LV_PORT_NUMBER} -LogFilePath  \"${WORKSPACE}\\${LOG_PATH}\\LabVIEWCLI_ExecuteBuildSpec.txt\" -LogToConsole true -Verbosity Default"
-
 				script{
 					try{
 						def version = bat(returnStdout: true, script: "@git tag --contains").trim() ? "fix" : "build"
