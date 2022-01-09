@@ -1,14 +1,56 @@
 pipeline {
 	agent any
 	environment{
-		LV_PROJECT_PATH = "${WORKSPACE}\\source\\test.lvproj"
-        NUM_TEST_RUNNERS = "1"
-        LV_PORT = "3363"
+		PROJECT_TITLE = "Docs Sandbox"
+		REPO_URL = "https://github.com/antsundq/docs_sandbox"
+		AUTHOR = "Anton Sundqvist"
+		INITIAL_RELEASE = 2021
+		LV_PROJECT_PATH = "source\\test.lvproj"
+		LV_BUILD_SPEC = "Demo"
+		LV_VIPB_PATH = "source\\test.vipb"
+		LV_VERSION = "20.0"
+		COMMIT_TAG = "${bat(returnStdout: true, script: '@git fetch & git tag --contains').trim()}"
 	}
 	stages {
-		stage('Unit Tests') {
+		stage('Initialize') {
 			steps {
-				bat "LabVIEWCLI -OperationName LUnit -ProjectPath \"${LV_PROJECT_PATH}\" -TestRunners ${NUM_TEST_RUNNERS} -ReportPath \"${WORKSPACE}\\reports\\lunit.xml\" -ClearIndex TRUE -PortNumber ${LV_PORT} -LogFilePath \"${WORKSPACE}\\LabVIEWCLI_LUnit.txt\" -LogToConsole true -Verbosity Default"
+				library 'astemes-build-support'
+				initWorkspace()
+				dir("build_support"){
+					pullBuildSupport()
+					initPythonVenv "requirements.txt"
+				}
+			}
+		}
+		stage('Test') {
+			steps {
+				runLUnit "${WORKSPACE}\\${LV_PROJECT_PATH}"
+			}
+		}
+		stage('Build') {
+			steps {
+				//Execute LabVIEW build spec
+				buildLVBuildSpec "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
+				
+				//Build VIPM package
+				script{VIP_FILE_PATH = buildVIPackage "${WORKSPACE}\\${LV_VIPB_PATH}", "${LV_VERSION}"}
+				
+				//Build mkdocs documentation
+				buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
+			}
+		}
+		stage('Deploy') {
+			when{
+				expression{
+					return "${COMMIT_TAG}"
+				}
+			}
+			environment{
+				GITHUB_TOKEN = credentials('github-token')
+			}
+			steps{
+				deployGithubPages()
+				deployGithubRelease "${REPO_URL}", "${COMMIT_TAG}", "${VIP_FILE_PATH}"
 			}
 		}
 	}
@@ -16,5 +58,11 @@ pipeline {
 		always{
 			junit "reports\\*.xml"
 		}
+	}
+	options {
+		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
+	}
+		triggers {
+		pollSCM('H/5 * * * *')
 	}
 }
