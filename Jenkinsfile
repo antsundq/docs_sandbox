@@ -3,7 +3,6 @@ pipeline {
 	environment{
 		PROJECT_TITLE = "Docs Sandbox"
 		REPO_URL = "https://github.com/antsundq/docs_sandbox"
-		REPORT_PATH = "reports"
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
 		LV_PROJECT_PATH = "source\\test.lvproj"
@@ -17,11 +16,15 @@ pipeline {
 			steps {
 				library 'astemes-build-support'
 				initWorkspace()
+				dir("build_support"){
+					pullBuildSupport()
+					initPythonVenv "requirements.txt"
+				}
 			}
 		}
 		stage('Test') {
 			steps {
-				runLUnit "${WORKSPACE}\\${LV_PROJECT_PATH}", "${WORKSPACE}\\${REPORT_PATH}"
+				runLUnit "${WORKSPACE}\\${LV_PROJECT_PATH}"
 			}
 		}
 		stage('Build') {
@@ -33,10 +36,6 @@ pipeline {
 				script{VIP_FILE_PATH = buildVIPackage "${WORKSPACE}\\${LV_VIPB_PATH}", "${LV_VERSION}"}
 				
 				//Build mkdocs documentation
-				dir("build_support"){
-					pullBuildSupport()
-					initPythonVenv "requirements.txt"
-				}
 				buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
 			}
 		}
@@ -57,7 +56,7 @@ pipeline {
 	}
 	post{
 		always{
-			junit "${REPORT_PATH}\\*.xml"
+			junit "reports\\*.xml"
 		}
 	}
 	options {
