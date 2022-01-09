@@ -1,7 +1,7 @@
 pipeline {
 	agent any
 	environment{
-		LV_PROJECT_PATH = "Path to Your LabVIEW Project.lvproj"
+		LV_PROJECT_PATH = "source\\test.lvproj"
         NUM_TEST_RUNNERS = "1"
         LV_PORT = "3363"
 	}
