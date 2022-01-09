@@ -15,7 +15,7 @@ pipeline {
 		stage('Initialize') {
 			when{
 				expression{
-					COMMIT_TAG != null
+					env.COMMIT_TAG != null
 				}
 			}
 			steps {
@@ -47,7 +47,7 @@ pipeline {
 		stage('Deploy') {
 			when{
 				expression{
-					COMMIT_TAG != null
+					env.COMMIT_TAG != null
 				}
 			}
 			environment{
