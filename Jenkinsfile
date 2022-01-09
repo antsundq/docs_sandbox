@@ -13,11 +13,6 @@ pipeline {
 	}
 	stages {
 		stage('Initialize') {
-			when{
-				expression{
-					env.COMMIT_TAG != null
-				}
-			}
 			steps {
 				library 'astemes-build-support'
 				initWorkspace()
