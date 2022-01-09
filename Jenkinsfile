@@ -43,7 +43,7 @@ pipeline {
 		stage('Deploy') {
 			when{
 				expression{
-					return "${COMMIT_TAG}"
+					"${COMMIT_TAG}"
 				}
 			}
 			environment{
