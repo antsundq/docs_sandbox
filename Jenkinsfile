@@ -30,10 +30,10 @@ pipeline {
 		stage('Build') {
 			steps {
 				//Execute LabVIEW build spec
-				buildLVBuildSpec "${WORKSPACE}\\${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
+				buildLVBuildSpec "${LV_PROJECT_PATH}", "${LV_BUILD_SPEC}"
 				
 				//Build VIPM package
-				script{VIP_FILE_PATH = buildVIPackage "${WORKSPACE}\\${LV_VIPB_PATH}", "${LV_VERSION}"}
+				script{VIP_FILE_PATH = buildVIPackage "${LV_VIPB_PATH}", "${LV_VERSION}"}
 				
 				//Build mkdocs documentation
 				buildDocs "${PROJECT_TITLE}", "${REPO_URL}", "${AUTHOR}", "${INITIAL_RELEASE}"
