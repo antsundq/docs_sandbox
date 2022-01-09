@@ -24,7 +24,7 @@ pipeline {
 		}
 		stage('Test') {
 			steps {
-				runLUnit "${WORKSPACE}\\${LV_PROJECT_PATH}"
+				runLUnit "${LV_PROJECT_PATH}"
 			}
 		}
 		stage('Build') {
