@@ -2,7 +2,7 @@ pipeline {
 	agent any
 	environment{
 		PROJECT_TITLE = "Docs Sandbox"
-		REPO_URL = "https://github.com/sunqn/docs_sandbox"
+		REPO_URL = "https://github.com/antsundq/docs_sandbox"
 		REPORT_PATH = "reports"
 		AUTHOR = "Anton Sundqvist"
 		INITIAL_RELEASE = 2021
