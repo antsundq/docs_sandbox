@@ -13,6 +13,11 @@ pipeline {
 	}
 	stages {
 		stage('Initialize') {
+			when{
+				expression{
+					"${COMMIT_TAG}" != null
+				}
+			}
 			steps {
 				library 'astemes-build-support'
 				initWorkspace()
@@ -42,7 +47,7 @@ pipeline {
 		stage('Deploy') {
 			when{
 				expression{
-					"${COMMIT_TAG}"
+					"${COMMIT_TAG}" != null
 				}
 			}
 			environment{
