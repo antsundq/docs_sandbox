@@ -14,6 +14,7 @@ pipeline {
 	stages {
 		stage('Initialize') {
 			steps {
+				echo "Commit Tag: ${COMMIT_TAG}"
 				library 'astemes-build-support'
 				initWorkspace()
 				dir("build_support"){
