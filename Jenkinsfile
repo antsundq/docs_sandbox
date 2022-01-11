@@ -15,9 +15,7 @@ pipeline {
 		stage('Initialize') {
 			steps {
 				library 'astemes-build-support'
-				echo "prekill"
 				killLv()
-				echo "postkill"
 				initWorkspace()
 				dir("build_support"){
 					pullBuildSupport()
