@@ -26,6 +26,7 @@ pipeline {
 		stage('Test') {
 			steps {
 				runLUnit "${LV_PROJECT_PATH}"
+				junit "reports\\*.xml"
 			}
 		}
 		stage('Build') {
@@ -56,8 +57,8 @@ pipeline {
 		}
 	}
 	post{
-		always{
-			junit "reports\\*.xml"
+		failure{
+			sendMail "anton.sundqvist@astemes.com"
 		}
 	}
 	options {
