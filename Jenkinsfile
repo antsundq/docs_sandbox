@@ -64,7 +64,4 @@ pipeline {
 	options {
 		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
 	}
-		triggers {
-		pollSCM('H/5 * * * *')
-	}
 }
