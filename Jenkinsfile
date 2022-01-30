@@ -57,7 +57,7 @@ pipeline {
 		}
 	}
 	post{
-		allways{
+		always{
 			sendMail "anton.sundqvist@astemes.com"
 		}
 	}
