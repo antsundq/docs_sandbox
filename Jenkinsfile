@@ -14,6 +14,12 @@ pipeline {
 	stages {
 		stage('Initialize') {
 			steps {
+				test
+			}
+		}
+	}
+}
+/*
 				library 'astemes-build-support'
 				killLv()
 				initWorkspace()
@@ -65,3 +71,4 @@ pipeline {
 		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
 	}
 }
+*/
