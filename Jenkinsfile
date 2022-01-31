@@ -14,6 +14,7 @@ pipeline {
 	stages {
 		stage('Initialize') {
 			steps {
+				library 'astemes-build-support'
 				test()
 			}
 		}
