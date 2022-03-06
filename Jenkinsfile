@@ -15,7 +15,6 @@ pipeline {
 			steps {
 				library 'astemes-build-support'
 				script{COMMIT_TAG = gitTag()}
-				echo "TAG: ${COMMIT_TAG}"
 				killLv()
 				initWorkspace()
 				dir("build_support"){
@@ -26,6 +25,7 @@ pipeline {
 		}
 		stage('Test') {
 			steps {
+				echo "TAG: ${COMMIT_TAG}"
 				runLUnit "${LV_PROJECT_PATH}"
 				junit "reports\\*.xml"
 			}
@@ -59,7 +59,7 @@ pipeline {
 	}
 	post{
 		always{
-			sendMail "anton.sundqvist@astemes.com"
+			//sendMail "anton.sundqvist@astemes.com"
 		}
 	}
 	options {
