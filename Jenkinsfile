@@ -9,7 +9,6 @@ pipeline {
 		LV_BUILD_SPEC = "Demo"
 		LV_VIPB_PATH = "source\\test.vipb"
 		LV_VERSION = "20.0"
-		library 'astemes-build-support'
 		COMMIT_TAG = gitTag()
 	}
 	stages {
