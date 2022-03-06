@@ -57,11 +57,7 @@ pipeline {
 			}
 		}
 	}
-	post{
-		always{
-			//sendMail "anton.sundqvist@astemes.com"
-		}
-	}
+
 	options {
 		buildDiscarder(logRotator(daysToKeepStr: '3', numToKeepStr: '5'))
 	}
