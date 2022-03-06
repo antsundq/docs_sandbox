@@ -9,11 +9,13 @@ pipeline {
 		LV_BUILD_SPEC = "Demo"
 		LV_VIPB_PATH = "source\\test.vipb"
 		LV_VERSION = "20.0"
-		COMMIT_TAG = "${bat(returnStdout: true, script: '@git fetch & git tag --contains').trim()}"
+		library 'astemes-build-support'
+		COMMIT_TAG = gitTag()
 	}
 	stages {
 		stage('Initialize') {
 			steps {
+				echo "${COMMIT_TAG}"
 				library 'astemes-build-support'
 				killLv()
 				initWorkspace()
